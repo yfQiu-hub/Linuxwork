@@ -1,0 +1,7 @@
+flask==3.0.0
+psycopg2-binary==2.9.9
+redis==5.0.1
+flask-socketio==5.3.6
+eventlet==0.33.3
+pydantic==2.5.0
+python-dotenv==1.0.0

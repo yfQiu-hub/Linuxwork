@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💣 在线扫雷</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>💣 在线扫雷</h1>
+            <div class="game-info">
+                <span id="player-name">游客</span>
+                <span id="mines-count">💣 10</span>
+                <span id="flags-count">🚩 0</span>
+                <span id="timer">⏱️ 0s</span>
+            </div>
+        </div>
+
+        <div id="setup-section">
+            <div class="setup-box">
+                <h2>开始游戏</h2>
+                <div class="form-group">
+                    <label>玩家名称</label>
+                    <input type="text" id="player-input" placeholder="输入你的名字" value="Player">
+                </div>
+                <div class="form-group">
+                    <label>难度选择</label>
+                    <div class="difficulty-buttons">
+                        <button class="diff-btn active" data-diff="easy">😊 简单 9×9</button>
+                        <button class="diff-btn" data-diff="medium">🤔 中等 16×16</button>
+                        <button class="diff-btn" data-diff="hard">😈 困难 16×30</button>
+                    </div>
+                </div>
+                <button id="start-game-btn">🚀 开始游戏</button>
+            </div>
+        </div>
+
+        <div id="game-section" style="display:none">
+            <div class="game-controls">
+                <button id="restart-btn">🔄 重新开始</button>
+                <button id="new-game-btn">📋 新游戏</button>
+            </div>
+            <div id="board-container">
+                <!-- 棋盘由JS动态生成 -->
+            </div>
+            <div id="game-status"></div>
+        </div>
+
+        <div id="leaderboard-section">
+            <h2>🏆 排行榜</h2>
+            <div id="leaderboard-list"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: minesweeper-db
+    environment:
+      POSTGRES_USER: gameuser
+      POSTGRES_PASSWORD: gamepass
+      POSTGRES_DB: minesweeper
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - game-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gameuser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: minesweeper-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - game-network
+
+  game-app:
+    build: .
+    container_name: minesweeper-app
+    environment:
+      DB_HOST: postgres
+      DB_NAME: minesweeper
+      DB_USER: gameuser
+      DB_PASSWORD: gamepass
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./:/app
+    networks:
+      - game-network
+    command: python app.py
+
+networks:
+  game-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
